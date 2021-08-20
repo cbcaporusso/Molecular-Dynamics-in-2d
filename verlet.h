@@ -3,13 +3,31 @@
 #ifndef VERLET_H
 #define VERLET_H
 
-class Verlet
-{
+class Verlet {
+
+    private: 
+
+    double   dt_{0.1} ;
+    double   gamma_{1}  ;
+    double   currentTime {0.000}; 
+    double   beginTime {0.000};
+    Vector2  box; 
+
+
     public:
-        Verlet();
-        void getdt();
-        void getBoxSize(); 
-        void stepper();
+
+        //Verlet();
+        
+        double  getdt() const       { return dt_; };
+        double  getTime() const     { return currentTime; };
+        double  getBegin() const    { return beginTime; };
+        void    setTimer(double t)  { currentTime = t; };
+        
+        void    printStatus(particles&) const;
+        void    stepper(particles&);
+        
+        //void    computeForces(particles&, );
+
 };
 
 #endif

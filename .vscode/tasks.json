@@ -9,6 +9,8 @@
 				"-g",
 				"${file}",
 				"${fileDirname}/atom.cpp",
+				"${fileDirname}/types.cpp",
+				"${fileDirname}/verlet.cpp",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}"
 			],

@@ -23,14 +23,14 @@ int main() {
     
     //Verlet MDSimulation; 
     
-    std::vector<atom> atoms; 
+    std::vector<atom> particles; 
 
-    if ( ! readDataFromFile(filename, &atoms) ) {
+    if ( ! readDataFromFile(filename, &particles) ) {
         exit(0);
     }
     
-    for (int i=0;i<atoms.size();i++) {
-        atoms.at(i).print();
+    for (int i=0;i<particles.size();i++) {
+        particles.at(i).print();
     }
     
     return 0;
