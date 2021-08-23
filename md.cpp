@@ -1,3 +1,11 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cmath>
+
+#include "atom.h"
+#include "verlet.h"
+
 /*
 Simple program that perform molecular dynamics simulations in 2D
 
@@ -7,55 +15,43 @@ cbcaporusso@gmail.com
 
 */
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cmath>
-
-#include "atom.h"
-#include "verlet.h"
-
-
 int main() {
 
-	//std::string filename;
-    
+	//std::string filename;   
 	//std::cout << "Please insert a file name (Ctrl-D to stop):" <<std::endl;
 	//std::cin  >> filename;
     //std::cout << "Please insert simulation duration (tmax):" <<std::endl;
 	//std::cin  >> tmax;
     
-    particles sim; 
-    //readfile(filename, sim);
+    // initialize particles in the box
     
-    mdatom temp {Vector2{0.0, 0.0}, Vector2{0.1, 0.2}};
-    sim.add(temp);
+    particles parts; 
+    parts.setBoxSize( {10.0, 10.0} );
+    parts.randomAdd(50);
+    parts.initGaussianVel(0,1.0);
 
-    Verlet verlet;
+    // set simulation up 
+    
+    Verlet sim(parts);
+    sim.setdt(0.005);
+    sim.setTmax(15.0);
+    
+    std::cout << std::fixed;
+    std::cout << std::setprecision(1);
+    std::cout << "Running a simulation of " << parts.size() << " particles for "\
+    << sim.getTmax() <<  " ts in a box of size " << parts.getBoxSize().u_[0] << "x" \
+    << parts.getBoxSize().u_[1] << " with periodic boundary conditions." << std::endl;
 
-    int step {0};
-    double tmax{1.0};
+    // start simulation
 
-    std::cout << "Running simulation for " << tmax << " timesteps." << std::endl;
-
-    while (verlet.getTime() < tmax ) {
-
-        verlet.printStatus(sim);
+    while ( sim.getTime() < sim.getTmax() ) {
         
-        /*if ( step%1000 == 0 ) {
+        sim.status();  
+        sim.printToFile(1000);
+        sim.stepper();
 
-            std::string outname ("xy.dump.");
-            outname+=std::to_string(verlet.getTime());
-
-            printToFile(outname,sim);
-
-        }*/
-
-        verlet.stepper(sim); 
-        step++;
- 
     };
-    
+
     return 0;
 
 }

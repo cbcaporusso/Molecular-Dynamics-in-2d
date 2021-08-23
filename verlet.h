@@ -1,4 +1,8 @@
+#include <cmath>
+
 #include "atom.h"
+#include "particles.h"
+
 
 #ifndef VERLET_H
 #define VERLET_H
@@ -6,28 +10,42 @@
 class Verlet {
 
     private: 
+        // members
+        double   dt_{0.0} ;
+        double   tmax{0.0};
+        double   currentTime {0.000}; 
+        double   beginTime {0.000};
+        
+        particles& parts_;
 
-    double   dt_{0.1} ;
-    double   gamma_{1}  ;
-    double   currentTime {0.000}; 
-    double   beginTime {0.000};
-    Vector2  box; 
-
+    private:
+        // methods
+        void     computeForces();
 
     public:
 
-        //Verlet();
+        // constructor
+        Verlet( particles& );
         
-        double  getdt() const       { return dt_; };
-        double  getTime() const     { return currentTime; };
-        double  getBegin() const    { return beginTime; };
-        void    setTimer(double t)  { currentTime = t; };
+        // getters and setters
+
+        double  getdt()     const   { return dt_;           };
+        double  getTime()   const   { return currentTime;   };
+        double  getBegin()  const   { return beginTime;     };
+        double  getTmax()   const   { return tmax;          };
+
+        void    setdt    ( double t )   { dt_ = t; };
+        void    setTimer ( double t )   { currentTime = t; };
+        void    setTmax  ( double t )   { tmax = t; }
         
-        void    printStatus(particles&) const;
-        void    stepper(particles&);
-        
-        //void    computeForces(particles&, );
+        void    status() const;
+        void    stepper();
+
+        void    printToFile( int );
 
 };
+
+
+
 
 #endif

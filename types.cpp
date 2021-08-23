@@ -3,50 +3,53 @@
 
 #include "types.h"
 
-std::ostream& operator<<( std::ostream& os, const Vector2& vec) {
-    os << vec.x_[0] << " " << vec.x_[1];
-    return os;
-} 
-
-/* std::istream& operator>>( std::istream& is, const Vector2& vec) {
-    is >> vec.x_ >> vec.y_;
-    return is;
-} */
-
-Vector2::Vector2() { x_[0] = 0.0, x_[1] = 0.0; };
-Vector2::Vector2(double x, double y) {
-    x_[0] = x;
-    x_[1] = y;
-};
-
+Vector2& Vector2::operator= (const Vector2& rhs)  {
+        //Check for self-assignment
+        if (this == &rhs) return *this;
+        u_[0] = rhs.u_[0];
+        u_[1] = rhs.u_[1];
+        return *this;
+}
 
 Vector2& Vector2::operator+=(const Vector2& right) {
-    x_[0] += right.x_[0];
-    x_[1] += right.x_[1]; 
+    u_[0] += right.u_[0];
+    u_[1] += right.u_[1]; 
     return *this;
 }
 
+Vector2 Vector2::operator+(const Vector2& rhs) const {
+    return Vector2(u_[0]+rhs.u_[0],u_[1]+rhs.u_[1]);
+}
+
+Vector2 Vector2::operator-(const Vector2& rhs) const {
+    return Vector2(u_[0]-rhs.u_[0],u_[1]-rhs.u_[1]); 
+}
+
+double Vector2::operator*(const Vector2& rhs) const {
+    return u_[0]*rhs.u_[0]+u_[1]*rhs.u_[1]; 
+}
 
 Vector2 operator*(const double left, Vector2 right) {
-        right.x_[0] *= left;
-        right.x_[1] *= left;
+        right.u_[0] *= left;
+        right.u_[1] *= left;
         return right;
 }
-
 Vector2 operator*(Vector2 left, const double right) {
-        left.x_[0] *= right;
-        left.x_[1] *= right;
-        return left;
+        return right * left;
 }
-
 Vector2 operator/(const double left, Vector2 right) {
-        right.x_[0] /= left;
-        right.x_[1] /= left;
+        right.u_[0] /= left;
+        right.u_[1] /= left;
         return right;
 }
-
 Vector2 operator/(Vector2 left, const double right) {
-        left.x_[0] /= right;
-        left.x_[1] /= right;
-        return left;
+        return right * left;
 }
+
+// non serve ci sia friend perche tanto i data members sono pubblici 
+
+std::ostream& operator<<( std::ostream& os, const Vector2& vec) {
+    os << vec.u_[0] << " " << vec.u_[1];
+    return os;
+} 
+

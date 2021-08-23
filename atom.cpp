@@ -3,53 +3,49 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <cmath>
 
 #include "atom.h"
 #include "types.h"
 
-
-void particles::add(mdatom atom) {
-	atoms_.push_back(atom);
-}
-
-void particles::printOutput( std::ostream& os ) {
-	for ( int i=0; i < size() ; i++ ) os << atom(i).r << " " << atom(i).v << std::endl;
-}
-
-void readfile(std::string filename, particles& parts) { 
- 	
-	std::ifstream file(filename, std::ios::in);
-	std::string line;
-	
-	if ( ! (file.is_open()) ) { std::cout << "Error: File does not exist." << std::endl; exit(1); }
-	
-	while (std::getline(file,line)) {
-		double xtemp{0.0},ytemp{0.0},vxtemp{0.0},vytemp{0.0};
-		std::istringstream iss(line);
-		iss >> xtemp >> ytemp >> vxtemp >> vytemp;
-		mdatom temp_atom { Vector2 {xtemp,ytemp}, Vector2 {vxtemp,vytemp} }; 
-		parts.add(temp_atom);
-	}
-
-}
-
-void printToFile( std::string filename, particles& parts ) {
-
-	std::ofstream file;
-	file.open(filename);
-	parts.printOutput(file);
-
-}
-
-
-mdatom::mdatom(Vector2 pos, Vector2 vel) {
-
+mdatom::mdatom(Vector2 pos, Vector2 vel, Vector2 force) {
 	r = pos;  
 	v = vel;
-
+	f = force;
 }
 
-mdatom::mdatom(Vector2 pos) {
+mdatom::mdatom(Vector2 pos, Vector2 vel) {
+	r = pos;  
+	v = vel;
+}
 
-	r = pos; 
+mdatom::mdatom(Vector2 pos) { r = pos; }
+
+double mdatom::PBCsqrDistance( const mdatom& x2, const Vector2 box ) { 
+
+	Vector2 dr;
+	dr = r - x2.r;
+
+	if 			( dr.u_[0] > 0.5 * box.u_[0] ) dr.u_[0] -= box.u_[0];
+	else if 	( dr.u_[0] < 0.5 * box.u_[0] ) dr.u_[0] += box.u_[0];
+
+	if 			( dr.u_[1] > 0.5 * box.u_[1] ) dr.u_[1] -= box.u_[1];
+	else if 	( dr.u_[0] < 0.5 * box.u_[0] ) dr.u_[1] += box.u_[1];
+
+	return dr * dr ;
+
+};
+
+void mdatom::PBCadjust( const Vector2 box ) {
+
+	double lx,ly;
+	lx = box.u_[0];
+	ly = box.u_[1];
+	
+	if ( r.u_[0] < 0.0 ) r.u_[0] += lx; ;
+	if ( r.u_[0] > lx  ) r.u_[0] -= lx; ;
+	
+	if ( r.u_[1] < 0.0 ) r.u_[1] += ly; ;
+	if ( r.u_[1] > ly  ) r.u_[1] -= ly; ;
+
 }
