@@ -1,3 +1,4 @@
-# src
+# Molecular Dynamics Simulations 
 
-The project 
+The project aim to simulate a system of particles interacting through Lennard-Jones potential. 
+
