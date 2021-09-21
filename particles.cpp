@@ -17,7 +17,7 @@ int particles::add( mdatom new_atom ) {
     // check for overlaps
 	double dd;
     for (int i=0; i<size(); i++) {
-        dd = atoms_[i].PBCsqrDistance( new_atom, box );
+        dd = atoms_[i].PBCdistance( new_atom, box );
         if ( dd < new_atom.radius ) {
             std::cerr << "Error: Particle Overlap detected" << std::endl;
             return 0;
@@ -67,6 +67,29 @@ void particles::printOutput( std::ostream& os ) {
 	for ( int i=0; i < size() ; i++ ) os << atoms_[i].id << " " << atoms_[i].r << " " << atoms_[i].v << " " << atoms_[i].f << std::endl;
 }
 
+double particles::kinE() {
+    double totkine{0.0};
+    for ( int i = 0; i < this->size() ; i++ ) {
+        totkine += 0.5 * atoms_[i].m * ( atoms_[i].v * atoms_[i].v ); 
+    }
+    return totkine;
+}
+
+void particles::checkBoundaries() {
+    
+    for ( int i = 0; i < this->size() ; i++ ) {
+        if (atoms_[i].r.u_[0] > this->box.u_[0] || atoms_[i].r.u_[0] < 0.0 ) {
+            std::cerr << "Error. Lost atom from the box." << std::endl;
+            std::exit(1);
+        }
+        if (atoms_[i].r.u_[1] > this->box.u_[1] || atoms_[i].r.u_[1] < 0.0 ) {
+            std::cerr << "Error. Lost atom from the box." << std::endl;
+            std::exit(1);
+        }
+    }
+
+}
+
 void readfile(std::string filename, particles& parts) { 
 
 	std::ifstream file(filename, std::ios::in);
@@ -83,4 +106,6 @@ void readfile(std::string filename, particles& parts) {
 	}
 
 }
+
+
 

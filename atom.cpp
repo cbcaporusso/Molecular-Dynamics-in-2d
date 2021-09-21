@@ -9,19 +9,16 @@
 #include "types.h"
 
 mdatom::mdatom(Vector2 pos, Vector2 vel, Vector2 force) {
-	r = pos;  
-	v = vel;
-	f = force;
+	r = pos; v = vel; f = force;
 }
-
 mdatom::mdatom(Vector2 pos, Vector2 vel) {
-	r = pos;  
-	v = vel;
+	r = pos; v = vel;
+}
+mdatom::mdatom(Vector2 pos) { 
+	r = pos; 
 }
 
-mdatom::mdatom(Vector2 pos) { r = pos; }
-
-double mdatom::PBCsqrDistance( const mdatom& x2, const Vector2 box ) { 
+double mdatom::PBCdistance( const mdatom& x2, const Vector2 box ) { 
 
 	Vector2 dr;
 	dr = r - x2.r;
@@ -32,7 +29,7 @@ double mdatom::PBCsqrDistance( const mdatom& x2, const Vector2 box ) {
 	if 			( dr.u_[1] > 0.5 * box.u_[1] ) dr.u_[1] -= box.u_[1];
 	else if 	( dr.u_[0] < 0.5 * box.u_[0] ) dr.u_[1] += box.u_[1];
 
-	return dr * dr ;
+	return std::sqrt( dr * dr );
 
 };
 

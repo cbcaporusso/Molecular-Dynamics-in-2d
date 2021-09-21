@@ -38,10 +38,10 @@ class Verlet {
         void    setTimer ( double t )   { currentTime = t; };
         void    setTmax  ( double t )   { tmax = t; }
         
-        void    status() const;
         void    stepper();
 
-        void    printToFile( int );
+        void    status(int) const;
+        void    printToFile(int);
 
 };
 

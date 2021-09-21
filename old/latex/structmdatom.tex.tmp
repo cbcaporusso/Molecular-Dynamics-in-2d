@@ -1,0 +1,51 @@
+\hypertarget{structmdatom}{}\doxysection{mdatom Struct Reference}
+\label{structmdatom}\index{mdatom@{mdatom}}
+
+
+Collaboration diagram for mdatom\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structmdatom_ae49496ee1cc3811de4105c8b26c81ce6}\label{structmdatom_ae49496ee1cc3811de4105c8b26c81ce6}} 
+{\bfseries mdatom} (\mbox{\hyperlink{structVector2}{Vector2}})
+\item 
+\mbox{\Hypertarget{structmdatom_a993920513d88267270641d234bc44f07}\label{structmdatom_a993920513d88267270641d234bc44f07}} 
+{\bfseries mdatom} (\mbox{\hyperlink{structVector2}{Vector2}}, \mbox{\hyperlink{structVector2}{Vector2}})
+\item 
+\mbox{\Hypertarget{structmdatom_aaeaa9e8f66bcf8674dce2b02ad29d3ce}\label{structmdatom_aaeaa9e8f66bcf8674dce2b02ad29d3ce}} 
+{\bfseries mdatom} (\mbox{\hyperlink{structVector2}{Vector2}}, \mbox{\hyperlink{structVector2}{Vector2}}, \mbox{\hyperlink{structVector2}{Vector2}})
+\item 
+\mbox{\Hypertarget{structmdatom_adf903b32ab3d578ed2f1b7ff8ed9e236}\label{structmdatom_adf903b32ab3d578ed2f1b7ff8ed9e236}} 
+double {\bfseries sqr\+Distance} (\mbox{\hyperlink{structmdatom}{mdatom}})
+\item 
+\mbox{\Hypertarget{structmdatom_a66e8881db212f6d3bcefda51e1191043}\label{structmdatom_a66e8881db212f6d3bcefda51e1191043}} 
+double {\bfseries kinE} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structmdatom_a37d81d935cec55b2e53028bec7be8185}\label{structmdatom_a37d81d935cec55b2e53028bec7be8185}} 
+\mbox{\hyperlink{structVector2}{Vector2}} {\bfseries r}
+\item 
+\mbox{\Hypertarget{structmdatom_a8b08a62b3edf0f8d51392d4edc57d70d}\label{structmdatom_a8b08a62b3edf0f8d51392d4edc57d70d}} 
+\mbox{\hyperlink{structVector2}{Vector2}} {\bfseries v}
+\item 
+\mbox{\Hypertarget{structmdatom_a4fb993d596fcd5167e98c0f9b6a49979}\label{structmdatom_a4fb993d596fcd5167e98c0f9b6a49979}} 
+\mbox{\hyperlink{structVector2}{Vector2}} {\bfseries f}
+\item 
+\mbox{\Hypertarget{structmdatom_afe317d953595409be533c4fdafd5504b}\label{structmdatom_afe317d953595409be533c4fdafd5504b}} 
+int {\bfseries id}
+\item 
+\mbox{\Hypertarget{structmdatom_a1553aae356d08cc0f6213ff457a27a2e}\label{structmdatom_a1553aae356d08cc0f6213ff457a27a2e}} 
+double {\bfseries m} \{1.\+0\}
+\item 
+\mbox{\Hypertarget{structmdatom_a65ee9919c5b51c7454b8b7a890d6087e}\label{structmdatom_a65ee9919c5b51c7454b8b7a890d6087e}} 
+double {\bfseries radius} \{1.\+0\}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+atom.\+h\item 
+atom.\+cpp\end{DoxyCompactItemize}

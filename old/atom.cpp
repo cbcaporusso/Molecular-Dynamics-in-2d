@@ -13,7 +13,7 @@ this->
 atom::atom(double inx, double iny) {
 
 	vx_ = 0.0; vy_ = 0.0;
-	x_ = inx;
+	u_ = inx;
 	y_ = iny;
 
 }
@@ -45,6 +45,6 @@ int readDataFromFile(std::string filename, std::vector<atom> * particles) {
 void atom::print() {
 
 	//std::cout << "# x\t y \t vx \t vy \t fx \t fy" << std::endl;
-	std::cout << x_ << " " << y_ << " " << vx_ << " " << vy_ << std::endl;
+	std::cout << u_ << " " << y_ << " " << vx_ << " " << vy_ << std::endl;
 
 }

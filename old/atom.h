@@ -15,7 +15,7 @@ class atom {
 
     private:
  
-           double x_;
+           double u_;
            double y_;
 
            double vx_;

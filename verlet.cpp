@@ -9,33 +9,36 @@
 #include "atom.h"
 #include "types.h"
 
-// constructor
-Verlet::Verlet(particles &simparts) : parts_(simparts) {}
+Verlet::Verlet(particles &simparts) : parts_(simparts) {}  // constructor
 
-// Verlet integration step
-void Verlet::stepper() {
+void Verlet::stepper()  {  
+    // Full Verlet integration step
+    // it connsist of two half steps 
 
     const double dt = getdt();
     
-    // first half integration step    
-    for (int i=0; i < parts_.size(); i++) {
+    for (int i=0; i < parts_.size(); i++) {    // first half integration step    
+
         mdatom& atm = parts_[i];
+
         atm.r  +=  dt * atm.v + 0.5 * dt * dt * atm.f / atm.m;
         atm.v  +=  0.5 * dt * atm.f / atm.m;
-        atm.PBCadjust( parts_.getBoxSize() );
+        atm.PBCadjust( parts_.box );  
+
     }
     
-    // compute forces with new positions
-    computeForces();
+    //parts_.checkBoundaries();    // check if atoms are inside the box
+    this->computeForces();    // compute forces with new positions
     
-    // second half integration step 
-    for (int i=0; i < parts_.size(); i++) { 
+    for (int i=0; i < parts_.size(); i++) {     // second half integration step 
+
         mdatom& atm = parts_[i];
+    
         atm.v  +=  0.5 * dt * atm.f / atm.m;
+
     }
 
-    // increment simulation timer
-    setTimer(currentTime+dt);
+    setTimer(currentTime+dt);    // increment simulation timer
 
 }
 
@@ -55,7 +58,7 @@ void Verlet::computeForces() {
         for(int j=0; j < parts_.size(); j++) {
             mdatom& aj = parts_[j];
 
-            dd      =   ai.PBCsqrDistance( aj, parts_.getBoxSize() ); 
+            dd      =   ai.PBCdistance( aj, parts_.box ); 
             //  lennard-jones pot and force computation 
             dr      =   ai.r - aj.r;    
             r6i     =   ai.radius / (dd*dd*dd);
@@ -71,10 +74,20 @@ void Verlet::computeForces() {
 }
 
 
-void Verlet::status() const {
-    std::cout << std::fixed;
-    std::cout << std::setprecision(3);
-    std::cout << "ts: " << getTime() << std::endl;
+void Verlet::status( int print_steps ) const {
+
+    if ( this->beginTime == this->currentTime ) {
+        std::cout << "ts kine" << std::endl;
+    }
+    
+    int computed_steps = static_cast<int>( ( currentTime - beginTime ) / dt_ );
+
+    if ( computed_steps % print_steps == 0 ) {
+        std::cout << std::fixed;
+        std::cout << std::setprecision(3);
+        std::cout << this->getTime() << " " << parts_.kinE() << std::endl;
+    }
+
 }
 
 void Verlet::printToFile( int print_steps ) {

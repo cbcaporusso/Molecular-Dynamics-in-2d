@@ -13,9 +13,9 @@ struct mdatom {
         Vector2 v;
         Vector2 f;
 
-        int     id;
+        int           id;
         const double  m {1.0};
-        const double  radius {1.0};
+        const double  radius {0.5};
 
         // constructor 
         mdatom();
@@ -23,8 +23,8 @@ struct mdatom {
         mdatom(Vector2, Vector2);
         mdatom(Vector2, Vector2, Vector2);
 
-        double  PBCsqrDistance(const mdatom&, Vector2);
-        void    PBCadjust( Vector2 );
+        double  PBCdistance(const mdatom&, Vector2);
+        void    PBCadjust(Vector2);
         
         //double  kinE() { return 0.5 * m * v * v; };
         //double potE(pot);
